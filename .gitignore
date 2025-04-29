@@ -1,0 +1,20 @@
+# Ignore user credentials file
+user.json
+
+# Ignore old files
+flightmemory_v0.py
+
+# Ignore all CSVs
+*.csv
+
+# Ignore all notebooks
+*.ipynb
+
+# Ignore macOS system files
+.DS_Store
+
+# Ignore PyCharm project files
+.idea/
+
+# Ignore Python bytecode files
+__pycache__/
