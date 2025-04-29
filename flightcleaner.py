@@ -9,7 +9,11 @@ flightcleaner
 # Import modules
 import numpy as np
 import pandas as pd
+import re
 
+from scipy.signal.windows import general_cosine
+
+from aircraft import Aircraft
 from datetime import datetime, timedelta
 from flightdata import FlightData
 
@@ -70,6 +74,11 @@ class FlightCleaner():
             (int(x.split(":")[0])) * 60 + int(x.split(":")[1].replace("h", "").strip()))
         return self
 
+    def clean_aircraft_info(self):
+        """ Create a column to include the generalized aircraft type """
+        self.df["aircraft_general"] = self.df["aircraft"].apply(lambda x: self.general_aircraft(x))
+        return self
+
     def clean_seat_info(self):
         """ Clean the seat information into two columns """
         self.df["seat_num"] = self.df[FlightData.SEAT.header].apply(lambda x: x.split("/")[0])
@@ -79,3 +88,21 @@ class FlightCleaner():
     def get_cleaned_df(self):
         """ Get the current, cleaned flightdata dataframe"""
         return self.df
+
+    # Internal methods
+    @staticmethod
+    def general_aircraft(aircraft):
+        """ Determine the generalize aircraft type """
+        aircraft_clean = aircraft.lower().strip()
+
+        # Parse the aircraft type
+        for aircraft_m in Aircraft:
+            match = re.search(aircraft_m.regex_rule, aircraft_clean)
+
+            # If there is a regex match, return the formatted aircraft type
+            if match:
+                model = match.group(1).upper()
+                return aircraft_m.format.replace("_", model)
+
+        # Raise an exception if the aircraft type cannot be parsed
+        raise Exception(f"General aircraft type could not be determined: {aircraft}")

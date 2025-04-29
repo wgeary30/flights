@@ -3,7 +3,7 @@ William Geary
 Flights
 29 April 2025
 --------------------------------------------------------------------------------
-flightmemory_procesing
+flightmemory_processing
 """
 
 # Import modules
@@ -29,6 +29,7 @@ def main():
         .combine_date_time("arr_date",  FlightData.ARR_TIME.header, "arrival")
         .clean_distance()
         .clean_duration()
+        .clean_aircraft_info()
         .clean_seat_info()
     )
 
