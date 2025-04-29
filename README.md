@@ -1,7 +1,7 @@
 ## ✈️ FlightMemory Scraper
 A Python project that scrapes flight history from [FlightMemory.com](https://www.flightmemory.com/) and cleans the data into a structured format for analysis.
 
-## 📁 Project Structure
+### 📁 Project Structure
 * flightmemory.py — Scrapes flight data and saves it as a CSV.
 * flightcleaner.py — Cleans and processes the raw CSV data (dates, times, durations).
 * flightdata.py — Defines a FlightData enum for standardized column names and table indexes.
